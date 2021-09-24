@@ -1,40 +1,11 @@
-using Items;
 using Lodash;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace GameUI
 {
-    public class Label : InteractableComponent
+    public sealed class Label : Interactable
     {
-        [SerializeField]
-        private string Text = "";
-        [SerializeField]
-        private GameUI.Color color = GameUI.Color.White;
-        [SerializeField]
-        private FontSize size = FontSize.Normal;
-        [SerializeField]
-        private FontStyle style = FontStyle.Normal;
-
-        private Text textElement;
-
-        private void Start()
-        {
-            textElement = MenuManager.Instance.CreateTextElement();
-            textElement.text = Text;
-            textElement.fontSize = (int)size;
-            textElement.color = Utils.ColorMap(color);
-            textElement.fontStyle = style;
-            IsVisible = false;
-        }
-
-        private void Update() => Position = _.WorldToScreenPoint(transform.position);
-
-        public override void Interact()
-        {
-            foreach (IInteractable interactable in GetComponents<IInteractable>())
-                interactable.Interact(this);
-        }
+        private UnityEngine.UI.Text textElement;
 
         public override Vector3 Position
         {
@@ -47,5 +18,21 @@ namespace GameUI
             get => enabled && textElement.enabled;
             set { textElement.enabled = value; }
         }
+
+        public void Initialize(string text = "",
+                                FontSize fontSize = FontSize.Normal,
+                                GameUI.Color color = GameUI.Color.White,
+                                FontStyle style = FontStyle.Normal)
+        {
+            textElement = textElement ?? MenuManager.Instance.CreateTextElement();
+            textElement.text = text;
+            textElement.fontSize = (int)fontSize;
+            textElement.color = Utils.ColorMap(color);
+            textElement.fontStyle = style;
+        }
+
+        private void Start() => IsVisible = false;
+
+        private void Update() => Position = _.WorldToScreenPoint(transform.position);
     }
 }

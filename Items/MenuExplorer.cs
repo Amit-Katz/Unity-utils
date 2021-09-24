@@ -5,27 +5,28 @@ using System.Collections.Generic;
 
 namespace GameUI
 {
+    [RequireComponent(typeof(Collider))]
     public class MenuExplorer : MonoBehaviour
     {
-        private List<InteractableComponent> near;
-        private InteractableComponent focused;
+        [SerializeField]
+        private GameObject hand;
 
-        void Start()
-        {
-            near = new List<InteractableComponent>();
-        }
+        private List<Interactable> near;
+        private Interactable focused;
+
+        void Start() => near = new List<Interactable>();
 
         void Update()
         {
             SetFocusedComponent();
 
             if (Input.GetKeyDown(KeyCode.E) && focused)
-                focused.Interact();
+                focused.Interact(this.hand);
         }
 
         private void SetFocusedComponent()
         {
-            InteractableComponent nearest = GetNearestVisibleTransformInList();
+            Interactable nearest = GetNearestVisibleInList();
 
             if (nearest != focused)
             {
@@ -35,7 +36,7 @@ namespace GameUI
             }
         }
 
-        private InteractableComponent GetNearestVisibleTransformInList()
+        private Interactable GetNearestVisibleInList()
         {
             if (near.Count > 0)
                 return near.OrderBy(item => _.Distance(item.transform.position, transform.position))
@@ -47,16 +48,16 @@ namespace GameUI
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out InteractableComponent component))
-                near.Add(component);
+            if (other.TryGetComponent(out Interactable menu))
+                near.Add(menu);
         }
 
         void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out InteractableComponent component))
+            if (other.TryGetComponent(out Interactable menu))
             {
-                near.Remove(component);
-                component.IsVisible = false;
+                near.Remove(menu);
+                menu.IsVisible = false;
             }
         }
     }

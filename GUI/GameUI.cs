@@ -1,10 +1,8 @@
-using System;
 using Lodash;
 using UnityEngine;
 
 namespace GameUI
 {
-    #region Utils
     static class Utils
     {
         public static UnityEngine.Color ColorMap(Color color) => color switch
@@ -23,7 +21,7 @@ namespace GameUI
             Physics.Raycast(_.WorldPointToRay(worldPoint), out RaycastHit hit, 20f) &&
             hit.transform.gameObject.layer == 0;
     }
-    #endregion
+
     public enum Color
     {
         White,
@@ -43,16 +41,25 @@ namespace GameUI
         Huge = 45,
     }
 
-    interface IComponent
+    interface IMenu
     {
+        /// <summary>
+        /// The world position of the component.
+        /// </summary>
         Vector3 Position { get; set; }
+        /// <summary>
+        /// Whether the component is visually enabled.
+        /// </summary>
         bool IsVisible { get; set; }
     }
 
-    public abstract class InteractableComponent : MonoBehaviour, IComponent
+    public delegate void MenuInteractionEvent(GameObject invoker);
+
+    public abstract class Interactable : MonoBehaviour, IMenu
     {
+        public event MenuInteractionEvent OnInteract;
         public virtual Vector3 Position { get => transform.position; set { transform.position = value; } }
         public virtual bool IsVisible { get; set; }
-        public virtual void Interact() => throw new NotImplementedException();
+        public void Interact(GameObject invoker) => this.OnInteract?.Invoke(invoker);
     }
 }

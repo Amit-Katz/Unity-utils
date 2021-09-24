@@ -19,7 +19,7 @@ namespace Lodash
         /// <returns>The horizontal input axis.</returns>
         public static float InputX() => Input.GetAxis("Horizontal");
         /// <returns>The vertical input axis.</returns>
-        public static float InputY()=> Input.GetAxis("Vertical");
+        public static float InputY() => Input.GetAxis("Vertical");
         /// <returns>The direction of 'second' relative to 'first'.</returns>
         public static Vector2 Direction(Vector2 first, Vector2 second) => (first - second).normalized;
         /// <returns>The direction of 'second' relative to 'first'.</returns>
@@ -31,10 +31,10 @@ namespace Lodash
         /// <returns>Whether the right mouse button is being pressed.</returns>
         public static bool IsMouseRightPressed() => Input.GetMouseButton(1);
         /// <returns>The world point projected to screen.</returns>
-        public static Vector3 WorldToScreenPoint(Vector3 worldPoint) => 
+        public static Vector3 WorldToScreenPoint(Vector3 worldPoint) =>
             Camera.main.WorldToScreenPoint(worldPoint);
         /// <returns>A ray going through a world point.</returns>
-        public static Ray WorldPointToRay(Vector3 worldPoint) => 
+        public static Ray WorldPointToRay(Vector3 worldPoint) =>
             Camera.main.ScreenPointToRay(Camera.main.WorldToScreenPoint(worldPoint));
 
         /// <returns>The mouse world poision using Raycasting</returns>
@@ -54,22 +54,14 @@ namespace Lodash
             looker.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90);
         }
         #region LookAt
-        public static void LookAt(GameObject looker, Vector2 target)
-        {
+        public static void LookAt(GameObject looker, Vector2 target) =>
             LookAt(looker.transform, target);
-        }
-        public static void LookAt(GameObject looker, GameObject target)
-        {
+        public static void LookAt(GameObject looker, GameObject target) =>
             LookAt(looker.transform, target.transform.position);
-        }
-        public static void LookAt(Transform looker, Transform target)
-        {
+        public static void LookAt(Transform looker, Transform target) =>
             LookAt(looker, target.position);
-        }
-        public static void LookAt(Transform looker, GameObject target)
-        {
+        public static void LookAt(Transform looker, GameObject target) =>
             LookAt(looker, target.transform.position);
-        }
         #endregion
 
         /// <param name="str">The string to repeat</param>
@@ -96,7 +88,8 @@ namespace Lodash
                 Value = value;
                 children = new List<Node<T>>();
 
-                foreach (T child in value) Add(child);
+                foreach (T child in value)
+                    Add(child);
             }
 
             public Node<T> Add(T value)

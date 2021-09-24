@@ -3,33 +3,34 @@ using UnityEngine;
 
 namespace Items
 {
-    interface IInteractable
+    public class Item : MonoBehaviour
     {
-        void Interact(InteractableComponent component);
-    }
+        private Label label;
 
-    interface IPickable
-    {
-        bool IsPickable { get; set; }
-    }
-
-    public class Item : MonoBehaviour, IPickable, IInteractable
-    {
-        public bool IsPickable { get; set; }
-
-        public void Interact(InteractableComponent component)
+        private void Start()
         {
-            component.IsVisible = false;
-            component.enabled = false;
-            //transform.localPosition = Vector3.zero;
-            //if (TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
-            //foreach (Collider collider in GetComponents<Collider>())
-            //    collider.enabled = false;
-            //SetParent(hand);
-            //transform.localEulerAngles = new Vector3(0f, 0f, 180);
-            //transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x),
-            //                            Mathf.Abs(transform.localScale.y),
-            //                            Mathf.Abs(transform.localScale.z));
+            label = gameObject.AddComponent<Label>();
+            label.Initialize("[E] Pick Up", FontSize.Big, GameUI.Color.Green, FontStyle.Italic);
+            label.OnInteract += this.Equip;
+        }
+
+        public void Equip(GameObject visualParent)
+        {
+            label.IsVisible = false;
+            label.enabled = false;
+
+            if (TryGetComponent(out Rigidbody rb))
+                rb.isKinematic = true;
+            foreach (Collider collider in GetComponents<Collider>())
+                collider.enabled = false;
+
+            transform.SetParent(visualParent.transform);
+
+            transform.localPosition = Vector3.zero;
+            transform.localEulerAngles = new Vector3(0f, 0f, 180);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x),
+                                       Mathf.Abs(transform.localScale.y),
+                                       Mathf.Abs(transform.localScale.z));
         }
     }
 }
