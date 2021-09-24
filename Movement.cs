@@ -43,8 +43,8 @@ public class Movement : MonoBehaviour
         float x = _.InputX(), y = _.InputY();
         Vector2 inputVector = new Vector2(x, y) * speed;
 
-        if (_.InputXRaw() != 0f &&
-            _.InputYRaw() != 0f)
+        if (Mathf.Abs(_.InputXRaw()) > float.Epsilon &&
+            Mathf.Abs(_.InputYRaw()) > float.Epsilon)
             inputVector /= Mathf.Sqrt(x * x + y * y);
 
         return inputVector;

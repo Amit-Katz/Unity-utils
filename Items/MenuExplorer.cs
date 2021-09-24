@@ -36,15 +36,10 @@ namespace GameUI
             }
         }
 
-        private Interactable GetNearestVisibleInList()
-        {
-            if (near.Count > 0)
-                return near.OrderBy(item => _.Distance(item.transform.position, transform.position))
-                    .FirstOrDefault((item) => item.enabled &&
-                    Utils.IsInLightOfSight(item.transform.position));
-
-            return null;
-        }
+        private Interactable GetNearestVisibleInList() => (!near.Any()) ? null :
+            near.OrderBy(item => _.Distance(item.transform.position, transform.position))
+                .FirstOrDefault(item =>
+                    item.enabled && Utils.IsInLightOfSight(item.transform.position));
 
         void OnTriggerEnter(Collider other)
         {

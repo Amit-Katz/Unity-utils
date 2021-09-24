@@ -10,7 +10,7 @@ namespace Items
         private void Start()
         {
             label = gameObject.AddComponent<Label>();
-            label.Initialize("[E] Pick Up", FontSize.Big, GameUI.Color.Green, FontStyle.Italic);
+            label.Initialize("[E] Pick Up");
             label.OnInteract += this.Equip;
         }
 

@@ -33,23 +33,11 @@ namespace GameUI
         Gray
     }
 
-    public enum FontSize
-    {
-        Small = 12,
-        Normal = 18,
-        Big = 30,
-        Huge = 45,
-    }
-
     interface IMenu
     {
-        /// <summary>
-        /// The world position of the component.
-        /// </summary>
+        /// <summary>The world position of the menu.</summary>
         Vector3 Position { get; set; }
-        /// <summary>
-        /// Whether the component is visually enabled.
-        /// </summary>
+        /// <summary>Whether the menu is visually enabled.</summary>
         bool IsVisible { get; set; }
     }
 
