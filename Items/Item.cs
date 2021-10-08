@@ -19,10 +19,8 @@ namespace Items
             label.IsVisible = false;
             label.enabled = false;
 
-            if (TryGetComponent(out Rigidbody rb))
-                rb.isKinematic = true;
-            foreach (Collider collider in GetComponents<Collider>())
-                collider.enabled = false;
+            if (TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
+            foreach (Collider collider in GetComponents<Collider>()) collider.enabled = false;
 
             transform.SetParent(visualParent.transform);
 

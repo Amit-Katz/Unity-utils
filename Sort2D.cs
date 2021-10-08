@@ -24,13 +24,13 @@ public class Sort2D : MonoBehaviour
 
     private void SetSortingOrderDeep(Transform transform, int sortingOrder)
     {
-        if (transform.TryGetComponent(out SortingGroup group)) group.sortingOrder = sortingOrder;
+        if (transform.TryGetComponent(out SortingGroup group))
+            group.sortingOrder = sortingOrder;
         else
         {
-            if (transform.TryGetComponent(out SpriteRenderer sr))
-                sr.sortingOrder = sortingOrder;
-            if (transform.TryGetComponent(out ParticleSystemRenderer psr))
-                psr.sortingOrder = sortingOrder;
+            if (transform.TryGetComponent(out Renderer renderer))
+                renderer.sortingOrder = sortingOrder;
+
             foreach (Transform child in transform)
                 SetSortingOrderDeep(child, sortingOrder);
         }

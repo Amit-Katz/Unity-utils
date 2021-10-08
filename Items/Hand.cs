@@ -5,7 +5,6 @@ using UnityEngine.U2D.IK;
 [RequireComponent(typeof(Movement))]
 public class Hand : MonoBehaviour
 {
-    //private Transform hand;
     [SerializeField]
     private LimbSolver2D solver2D;
     [SerializeField]
@@ -39,17 +38,4 @@ public class Hand : MonoBehaviour
         movement.FlipSpriteScale(mousePoint.x - transform.position.x);
         target.position = mousePoint;
     }
-
-    //public void EquipItem(Transform item)
-    //{
-    //    if (item.TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
-    //    foreach (Collider collider in item.GetComponents<Collider>())
-    //        collider.enabled = false;
-    //    item.SetParent(hand);
-    //    item.localPosition = Vector3.zero;
-    //    item.localEulerAngles = new Vector3(0f, 0f, 180);
-    //    item.localScale = new Vector3(Mathf.Abs(item.localScale.x),
-    //                                Mathf.Abs(item.localScale.y),
-    //                                Mathf.Abs(item.localScale.z));
-    //}
 }
