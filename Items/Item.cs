@@ -14,21 +14,10 @@ namespace Items
             label.OnInteract += this.Equip;
         }
 
-        public void Equip(GameObject visualParent)
+        public void Equip(GameObject equipper)
         {
-            label.IsVisible = false;
-            label.enabled = false;
-
-            if (TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
-            foreach (Collider collider in GetComponents<Collider>()) collider.enabled = false;
-
-            transform.SetParent(visualParent.transform);
-
-            transform.localPosition = Vector3.zero;
-            transform.localEulerAngles = new Vector3(0f, 0f, 180);
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x),
-                                       Mathf.Abs(transform.localScale.y),
-                                       Mathf.Abs(transform.localScale.z));
+            if (equipper.TryGetComponent<Inventory>(out Inventory inventory))
+                inventory.PickItem(this);
         }
     }
 }

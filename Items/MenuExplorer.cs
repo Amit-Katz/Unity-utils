@@ -8,20 +8,17 @@ namespace GameUI
     [RequireComponent(typeof(Collider))]
     public class MenuExplorer : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject hand;
-
-        private List<Interactable> near;
+        private HashSet<Interactable> near;
         private Interactable focused;
 
-        void Start() => near = new List<Interactable>();
+        void Start() => near = new HashSet<Interactable>();
 
         void Update()
         {
             SetFocusedComponent();
 
             if (Input.GetKeyDown(KeyCode.E) && focused)
-                focused.Interact(this.hand);
+                focused.Interact(gameObject);
         }
 
         private void SetFocusedComponent()
@@ -38,8 +35,8 @@ namespace GameUI
 
         private Interactable GetNearestVisibleInList() => (!near.Any()) ? null :
             near.OrderBy(item => _.Distance(item.transform.position, transform.position))
-                .FirstOrDefault(item =>
-                    item.enabled && Utils.IsInLightOfSight(item.transform.position));
+                .FirstOrDefault(item => !item.transform.parent && item.enabled &&
+                Utils.IsInLightOfSight(item.transform.position));
 
         void OnTriggerEnter(Collider other)
         {
